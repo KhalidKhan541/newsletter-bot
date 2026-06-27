@@ -1,8 +1,10 @@
-name: Daily Newsletter Publisher
+name: Newsletter Publisher
 
 on:
   schedule:
-    - cron: "0 2 * * *"
+    - cron: "0 2 * * *"   # 7 AM PKT
+    - cron: "0 8 * * *"   # 1 PM PKT
+    - cron: "0 14 * * *"  # 7 PM PKT
   workflow_dispatch:
 
 env:
