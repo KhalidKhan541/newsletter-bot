@@ -7,6 +7,9 @@ on:
     - cron: "0 14 * * *"  # 7 PM PKT
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 env:
   GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
   GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
@@ -35,6 +38,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add analytics_log.csv publish_log.json
+          git add data/analytics_log.csv data/publish_log.json
           git diff --cached --quiet || git commit -m "chore: update newsletter logs"
           git push

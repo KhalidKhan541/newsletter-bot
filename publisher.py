@@ -5,7 +5,7 @@ import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 DATA_DIR = Path(__file__).parent / "data"
@@ -61,8 +61,8 @@ def send_newsletter_to_email(content: dict, config: dict = None) -> dict:
     sender_email = config.get("SENDER_EMAIL") or os.environ.get("SENDER_EMAIL", "")
     recipient_email = config.get("RECIPIENT_EMAIL") or os.environ.get("RECIPIENT_EMAIL", "")
 
-    subject = content["subject"]
-    body = content["body"]
+    subject = content.get("subject", "Untitled")
+    body = content.get("body", "")
     issue_number = get_next_issue_number()
     word_count = len(body.split())
 
