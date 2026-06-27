@@ -1,0 +1,22 @@
+{
+  "newsletter_name": "The Signal",
+  "niche": "AI & Tech for Founders",
+  "tone": "Smart, direct, like a well-connected friend in the industry",
+  "target_audience": "Early-stage founders and indie hackers",
+  "publish_time_utc": "02:00",
+  "subscriber_count": 0,
+  "sponsor_threshold": 1000,
+  "sources": {
+    "rss": [
+      "https://techcrunch.com/feed/",
+      "https://www.theverge.com/rss/index.xml",
+      "https://arstechnica.com/feed/"
+    ],
+    "reddit": ["MachineLearning", "startups", "artificial", "SideProject"],
+    "keywords": ["AI", "startup funding", "product launch", "founder tools", "GPT", "LLM"]
+  },
+  "social": {
+    "post_to_twitter": false,
+    "post_to_linkedin": false
+  }
+}
