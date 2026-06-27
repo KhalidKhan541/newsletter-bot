@@ -9,7 +9,7 @@ env:
   GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
   GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
   SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
-  SUBSTACK_EMAIL: ${{ secrets.SUBSTACK_EMAIL }}
+  RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
 
 jobs:
   publish-newsletter:

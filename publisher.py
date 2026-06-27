@@ -45,51 +45,91 @@ def _save_as_draft(subject: str, body: str, issue_number: int) -> str:
     return str(draft_path)
 
 
-def publish_to_substack(content: dict, config: dict = None) -> dict:
+def send_newsletter_to_email(content: dict, config: dict = None) -> dict:
     """
-    Publish newsletter content to Substack via email-to-publish.
+    Send newsletter to your email so you can copy-paste into Substack.
 
     Args:
         content: {"subject": str, "body": str}  (body is HTML)
         config:  optional override dict; falls back to env vars
 
     Returns:
-        {"status": "published"|"draft", "issue_number": int, "path"?: str}
+        {"status": "sent"|"draft", "issue_number": int, "path"?: str}
     """
     config = config or {}
     gmail_password = config.get("GMAIL_APP_PASSWORD") or os.environ.get("GMAIL_APP_PASSWORD", "")
     sender_email = config.get("SENDER_EMAIL") or os.environ.get("SENDER_EMAIL", "")
-    substack_email = config.get("SUBSTACK_EMAIL") or os.environ.get("SUBSTACK_EMAIL", "")
+    recipient_email = config.get("RECIPIENT_EMAIL") or os.environ.get("RECIPIENT_EMAIL", "")
 
     subject = content["subject"]
     body = content["body"]
     issue_number = get_next_issue_number()
     word_count = len(body.split())
 
+    # Build a nice email with the newsletter content
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"] = sender_email
-    msg["To"] = substack_email
-    msg.attach(MIMEText(body, "html"))
+    msg["Subject"] = f"Newsletter Issue #{issue_number}: {subject}"
+    msg["From"] = f"Al Polymath Bot <{sender_email}>"
+    msg["To"] = recipient_email
 
-    published = False
+    # Plain text version
+    plain_text = f"""Newsletter Issue #{issue_number}
+Subject: {subject}
+
+{body}
+
+---
+Copy the HTML version above and paste it into Substack editor.
+"""
+
+    # HTML version with instructions
+    html_body = f"""
+<div style="background:#f5f5f5;padding:20px;font-family:Arial;">
+<div style="background:white;max-width:600px;margin:0 auto;padding:30px;border-radius:8px;">
+<div style="background:#e94560;color:white;padding:15px;border-radius:8px;margin-bottom:20px;">
+<h2 style="margin:0;">Newsletter Issue #{issue_number}</h2>
+<p style="margin:5px 0 0 0;">Ready to publish on Substack</p>
+</div>
+
+<div style="background:#fff3cd;padding:15px;border-radius:8px;margin-bottom:20px;">
+<strong>How to publish:</strong>
+<ol>
+<li>Copy the newsletter content below</li>
+<li>Go to Substack → New post</li>
+<li>Paste the content</li>
+<li>Add the subject line: <em>{subject}</em></li>
+<li>Click Publish</li>
+</ol>
+</div>
+
+<h1>{subject}</h1>
+{body}
+</div>
+</div>
+"""
+
+    msg.attach(MIMEText(plain_text, "plain"))
+    msg.attach(MIMEText(html_body, "html"))
+
+    sent = False
     draft_path = None
 
-    if gmail_password and sender_email and substack_email:
+    if gmail_password and sender_email and recipient_email:
         context = ssl.create_default_context()
         try:
             with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
                 server.login(sender_email, gmail_password)
-                server.sendmail(sender_email, substack_email, msg.as_string())
-            published = True
+                server.sendmail(sender_email, recipient_email, msg.as_string())
+            sent = True
+            print(f"Newsletter sent to {recipient_email}")
         except Exception as e:
-            print(f"SMTP publish failed: {e}")
+            print(f"SMTP failed: {e}")
 
-    if not published:
+    if not sent:
         draft_path = _save_as_draft(subject, body, issue_number)
         status = "draft"
     else:
-        status = "published"
+        status = "sent"
 
     issue_data = {
         "issue_number": issue_number,
@@ -107,3 +147,7 @@ def publish_to_substack(content: dict, config: dict = None) -> dict:
     if draft_path:
         result["path"] = draft_path
     return result
+
+
+# Keep old function name as alias
+publish_to_substack = send_newsletter_to_email
