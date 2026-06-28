@@ -133,7 +133,7 @@ Copy the HTML version above and paste it into Substack editor.
 
     issue_data = {
         "issue_number": issue_number,
-        "date": datetime.utcnow().isoformat() + "Z",
+        "date": datetime.now(timezone.utc).isoformat(),
         "subject_line": subject,
         "status": status,
         "word_count": word_count,
