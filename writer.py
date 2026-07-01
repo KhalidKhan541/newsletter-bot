@@ -10,17 +10,19 @@ GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL = "llama-3.3-70b-versatile"
 
 RSS_FEEDS = [
-    "https://techcrunch.com/feed/",
-    "https://www.theverge.com/rss/index.xml",
-    "https://feeds.arstechnica.com/arstechnica/index"
+    "https://aeon.co/feed",
+    "https://www.theatlantic.com/feed/all/",
+    "https://feeds.feedburner.com/neuroscience",
+    "https://www.sciencedaily.com/rss/mind_brain.xml",
+    "https://blog.davidchalmers.com/feed/"
 ]
 
 REDDIT_SUBREDDITS = [
-    "technology",
-    "programming",
-    "artificial",
-    "MachineLearning",
-    "startups"
+    "cognitivescience",
+    "philosophy",
+    "neuroscience",
+    "psychology",
+    "PhilosophyofMind"
 ]
 
 FILLER_PHRASES = [
@@ -153,7 +155,7 @@ def _scrape_reddit(subreddit: str, limit: int = 10) -> list[dict]:
 
 def research_topics(config: dict) -> list:
     all_topics = []
-    keywords = config.get("keywords", ["AI", "tech startups", "cybersecurity", "cloud computing"])
+    keywords = config.get("keywords", ["cognitive science", "philosophy of mind", "consciousness", "neuroscience", "epistemology", "ethics", "free will", "mental models"])
     rss_feeds = config.get("rss_feeds", RSS_FEEDS)
     subreddits = config.get("subreddits", REDDIT_SUBREDDITS)
 
@@ -178,8 +180,11 @@ def research_topics(config: dict) -> list:
         {
             "role": "system",
             "content": (
-                "You are a newsletter editor. Analyze the raw topic list and select the 3-5 most "
-                "engaging, newsworthy, and relevant topics. Return a JSON array where each item has: "
+                "You are a newsletter editor for a Cognitive Science & Philosophy newsletter. "
+                "Analyze the raw topic list and select the 3-5 most engaging, newsworthy, and relevant topics "
+                "related to cognitive science, neuroscience, philosophy of mind, consciousness, epistemology, "
+                "ethics, decision-making, mental models, and what it means to be human. "
+                "Return a JSON array where each item has: "
                 "title (string), summary (string, 1-2 sentences), link (string url), source (string). "
                 "Only return valid JSON, no markdown fences."
             )
@@ -211,9 +216,9 @@ def research_topics(config: dict) -> list:
 
 
 def write_newsletter(config: dict, topics: list) -> dict:
-    tone = config.get("tone", "professional yet conversational")
-    audience = config.get("audience", "tech professionals and enthusiasts")
-    brand_name = config.get("brand_name", "TechPulse")
+    tone = config.get("tone", "Thoughtful, curious, like a philosopher-scientist exploring ideas at the edge of knowledge")
+    audience = config.get("target_audience", "Curious minds interested in how we think, what we know, and what it means to be human")
+    brand_name = config.get("newsletter_name", "Al Polymath")
     extra_instructions = config.get("extra_instructions", "")
 
     topics_text = "\n".join(
@@ -221,27 +226,29 @@ def write_newsletter(config: dict, topics: list) -> dict:
         for t in topics
     )
 
-    system_prompt = f"""You are a world-class newsletter writer for {brand_name}.
+    system_prompt = f"""You are a world-class newsletter writer for {brand_name}, a newsletter about Cognitive Science & Philosophy.
 Write a newsletter in this EXACT format:
 
 SUBJECT LINE: (under 50 characters)
 PREVIEW TEXT: (one sentence, under 100 chars)
-OPENING HOOK: (2-3 compelling sentences)
-THE MAIN STORY: (200-300 words, deep analysis of the top story)
+OPENING HOOK: (2-3 compelling sentences that make the reader think)
+THE MAIN STORY: (200-300 words, deep analysis of the top story — explore the science, the philosophy, or both)
 QUICK HITS:
 - [Title](link) — One sentence summary (repeat 3 times with different stories)
-TOOL OF THE DAY: Name — brief description with why it's useful
-CLOSING THOUGHT: (1-2 sentences, thought-provoking)
+IDEA OF THE DAY: Name — a fascinating concept, experiment, or philosophical thought experiment with why it matters
+CLOSING THOUGHT: (1-2 sentences, thought-provoking, leave the reader questioning something)
 FOOTER: (standard unsubscribe/delivery info placeholder)
 
 Rules:
 - Tone: {tone}
 - Audience: {audience}
-- Include at least 1 specific data point, statistic, or number
+- Write about cognitive science, neuroscience, philosophy of mind, consciousness, epistemology, ethics, decision-making, mental models, and what it means to be human
+- Include at least 1 specific data point, statistic, or research finding
 - Avoid filler phrases like "in today's world" or "as we all know"
 - Write in a way that respects the reader's intelligence
 - Make the opening hook irresistible so readers continue
 - Quick hits must include working links from the provided data
+- Think deeply about the intersection of mind, brain, and experience
 - {extra_instructions}
 
 Return your output as a JSON object with these exact keys:

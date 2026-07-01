@@ -1,19 +1,21 @@
 {
   "newsletter_name": "Al Polymath",
-  "niche": "AI & Tech for Founders",
-  "tone": "Smart, direct, like a well-connected friend in the industry",
-  "target_audience": "Early-stage founders and indie hackers",
+  "niche": "Cognitive Science & Philosophy",
+  "tone": "Thoughtful, curious, like a philosopher-scientist exploring ideas at the edge of knowledge",
+  "target_audience": "Curious minds interested in how we think, what we know, and what it means to be human",
   "publish_time_utc": "02:00",
   "subscriber_count": 0,
   "sponsor_threshold": 1000,
   "sources": {
     "rss": [
-      "https://techcrunch.com/feed/",
-      "https://www.theverge.com/rss/index.xml",
-      "https://arstechnica.com/feed/"
+      "https://feeds.feedburner.com/neuroscience",
+      "https://www.sciencedaily.com/rss/mind_brain.xml",
+      "https://aeon.co/feed",
+      "https://www.theatlantic.com/feed/all/",
+      "https://blog.davidchalmers.com/feed/"
     ],
-    "reddit": ["MachineLearning", "startups", "artificial", "SideProject"],
-    "keywords": ["AI", "startup funding", "product launch", "founder tools", "GPT", "LLM"]
+    "reddit": ["cognitivescience", "philosophy", "neuroscience", "psychology", "PhilosophyofMind"],
+    "keywords": ["cognitive science", "philosophy of mind", "consciousness", "neuroscience", "epistemology", "ethics", "free will", "mental models", "decision making", "moral philosophy", "phenomenology", "artificial consciousness", "embodied cognition", "predictive processing"]
   },
   "social": {
     "post_to_twitter": false,

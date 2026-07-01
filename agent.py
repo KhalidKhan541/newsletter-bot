@@ -141,8 +141,8 @@ def run_pipeline():
         try:
             write_config = {
                 "tone": config.get("tone", "professional"),
-                "audience": config.get("target_audience", "tech professionals"),
-                "brand_name": config.get("newsletter_name", "TechPulse")
+                "audience": config.get("target_audience", "Curious minds interested in how we think, what we know, and what it means to be human"),
+                "brand_name": config.get("newsletter_name", "Al Polymath")
             }
             newsletter_content = writer.write_newsletter(write_config, topics)
             log.info(f"  Subject: {newsletter_content.get('subject', 'N/A')}")

@@ -97,9 +97,9 @@ def generate_sponsor_kit(config: dict, subscriber_count: int) -> dict:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     SPONSOR_KIT_DIR.mkdir(parents=True, exist_ok=True)
 
-    newsletter_name = config.get("newsletter_name", "The Signal")
-    niche = config.get("niche", "AI & Tech")
-    audience = config.get("target_audience", "Founders and indie hackers")
+    newsletter_name = config.get("newsletter_name", "Al Polymath")
+    niche = config.get("niche", "Cognitive Science & Philosophy")
+    audience = config.get("target_audience", "Curious minds interested in how we think, what we know, and what it means to be human")
 
     kit = {
         "newsletter_name": newsletter_name,
