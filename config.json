@@ -1,8 +1,8 @@
 {
   "newsletter_name": "Al Polymath",
-  "niche": "Cognitive Science & Philosophy",
+  "niche": "Cognitive Science, Philosophy & AI",
   "tone": "Thoughtful, curious, like a philosopher-scientist exploring ideas at the edge of knowledge",
-  "target_audience": "Curious minds interested in how we think, what we know, and what it means to be human",
+  "target_audience": "Curious minds interested in how we think, what we know, and what it means to be human — and how AI is changing the game",
   "publish_time_utc": "02:00",
   "subscriber_count": 0,
   "sponsor_threshold": 1000,
@@ -12,10 +12,21 @@
       "https://www.sciencedaily.com/rss/mind_brain.xml",
       "https://aeon.co/feed",
       "https://www.theatlantic.com/feed/all/",
-      "https://blog.davidchalmers.com/feed/"
+      "https://blog.davidchalmers.com/feed/",
+      "https://techcrunch.com/feed/",
+      "https://www.theverge.com/rss/index.xml",
+      "https://feeds.arstechnica.com/arstechnica/index",
+      "https://blog.google/technology/ai/rss/",
+      "https://openai.com/blog/rss.xml"
     ],
-    "reddit": ["cognitivescience", "philosophy", "neuroscience", "psychology", "PhilosophyofMind"],
-    "keywords": ["cognitive science", "philosophy of mind", "consciousness", "neuroscience", "epistemology", "ethics", "free will", "mental models", "decision making", "moral philosophy", "phenomenology", "artificial consciousness", "embodied cognition", "predictive processing"]
+    "reddit": ["cognitivescience", "philosophy", "neuroscience", "psychology", "PhilosophyofMind", "MachineLearning", "deeplearning", "LocalLLaMA", "artificial", "singularity"],
+    "keywords": [
+      "cognitive science", "philosophy of mind", "consciousness", "neuroscience", "epistemology", "ethics", "free will", "mental models",
+      "machine learning", "deep learning", "agentic AI", "LLM", "large language model", "AI agent", "transformer architecture",
+      "reinforcement learning", "neural networks", "GPT", "Claude", "Gemini", "AI safety", "alignment",
+      "decision making", "moral philosophy", "phenomenology", "embodied cognition", "predictive processing",
+      "AI research", "AI breakthrough", "open source AI", "AI regulation", "AI consciousness"
+    ]
   },
   "social": {
     "post_to_twitter": false,

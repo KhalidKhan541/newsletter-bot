@@ -14,7 +14,12 @@ RSS_FEEDS = [
     "https://www.theatlantic.com/feed/all/",
     "https://feeds.feedburner.com/neuroscience",
     "https://www.sciencedaily.com/rss/mind_brain.xml",
-    "https://blog.davidchalmers.com/feed/"
+    "https://blog.davidchalmers.com/feed/",
+    "https://techcrunch.com/feed/",
+    "https://www.theverge.com/rss/index.xml",
+    "https://feeds.arstechnica.com/arstechnica/index",
+    "https://blog.google/technology/ai/rss/",
+    "https://openai.com/blog/rss.xml"
 ]
 
 REDDIT_SUBREDDITS = [
@@ -22,7 +27,12 @@ REDDIT_SUBREDDITS = [
     "philosophy",
     "neuroscience",
     "psychology",
-    "PhilosophyofMind"
+    "PhilosophyofMind",
+    "MachineLearning",
+    "deeplearning",
+    "LocalLLaMA",
+    "artificial",
+    "singularity"
 ]
 
 FILLER_PHRASES = [
@@ -155,7 +165,7 @@ def _scrape_reddit(subreddit: str, limit: int = 10) -> list[dict]:
 
 def research_topics(config: dict) -> list:
     all_topics = []
-    keywords = config.get("keywords", ["cognitive science", "philosophy of mind", "consciousness", "neuroscience", "epistemology", "ethics", "free will", "mental models"])
+    keywords = config.get("keywords", ["cognitive science", "philosophy of mind", "consciousness", "machine learning", "deep learning", "agentic AI", "LLM", "AI agent", "AI safety", "free will", "mental models"])
     rss_feeds = config.get("rss_feeds", RSS_FEEDS)
     subreddits = config.get("subreddits", REDDIT_SUBREDDITS)
 
@@ -180,10 +190,12 @@ def research_topics(config: dict) -> list:
         {
             "role": "system",
             "content": (
-                "You are a newsletter editor for a Cognitive Science & Philosophy newsletter. "
+                "You are a newsletter editor for a newsletter about Cognitive Science, Philosophy, and AI. "
                 "Analyze the raw topic list and select the 3-5 most engaging, newsworthy, and relevant topics "
-                "related to cognitive science, neuroscience, philosophy of mind, consciousness, epistemology, "
-                "ethics, decision-making, mental models, and what it means to be human. "
+                "across these domains: cognitive science, neuroscience, philosophy of mind, consciousness, "
+                "epistemology, ethics, decision-making, mental models, machine learning, deep learning, "
+                "agentic AI, large language models, AI safety, and the intersection of AI with human thought. "
+                "Balance coverage — include at least 1 AI/ML story and 1 cognitive science/philosophy story when possible. "
                 "Return a JSON array where each item has: "
                 "title (string), summary (string, 1-2 sentences), link (string url), source (string). "
                 "Only return valid JSON, no markdown fences."
@@ -226,29 +238,29 @@ def write_newsletter(config: dict, topics: list) -> dict:
         for t in topics
     )
 
-    system_prompt = f"""You are a world-class newsletter writer for {brand_name}, a newsletter about Cognitive Science & Philosophy.
+    system_prompt = f"""You are a world-class newsletter writer for {brand_name}, a newsletter about Cognitive Science, Philosophy, and AI.
 Write a newsletter in this EXACT format:
 
 SUBJECT LINE: (under 50 characters)
 PREVIEW TEXT: (one sentence, under 100 chars)
 OPENING HOOK: (2-3 compelling sentences that make the reader think)
-THE MAIN STORY: (200-300 words, deep analysis of the top story — explore the science, the philosophy, or both)
+THE MAIN STORY: (200-300 words, deep analysis — could be a breakthrough in AI, a philosophical insight, a neuroscience finding, or how AI intersects with human cognition)
 QUICK HITS:
-- [Title](link) — One sentence summary (repeat 3 times with different stories)
-IDEA OF THE DAY: Name — a fascinating concept, experiment, or philosophical thought experiment with why it matters
+- [Title](link) — One sentence summary (repeat 3 times with different stories — mix AI/ML and cognitive science/philosophy)
+IDEA OF THE DAY: Name — a fascinating concept, experiment, AI system, or philosophical thought experiment with why it matters
 CLOSING THOUGHT: (1-2 sentences, thought-provoking, leave the reader questioning something)
 FOOTER: (standard unsubscribe/delivery info placeholder)
 
 Rules:
 - Tone: {tone}
 - Audience: {audience}
-- Write about cognitive science, neuroscience, philosophy of mind, consciousness, epistemology, ethics, decision-making, mental models, and what it means to be human
+- Write about the full spectrum: cognitive science, neuroscience, philosophy of mind, consciousness, epistemology, ethics, free will, mental models, machine learning, deep learning, agentic AI, LLMs, AI safety, and what it means to be human in the age of AI
 - Include at least 1 specific data point, statistic, or research finding
 - Avoid filler phrases like "in today's world" or "as we all know"
 - Write in a way that respects the reader's intelligence
 - Make the opening hook irresistible so readers continue
 - Quick hits must include working links from the provided data
-- Think deeply about the intersection of mind, brain, and experience
+- When covering AI topics, go beyond surface-level — explore implications, limitations, and philosophical questions
 - {extra_instructions}
 
 Return your output as a JSON object with these exact keys:
